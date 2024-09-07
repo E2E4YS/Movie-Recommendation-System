@@ -8,6 +8,10 @@ Demo
 
 https://movie-recommendationsystem-ad9e205393d5.herokuapp.com
 
+<img width="1280" alt="image" src="https://github.com/user-attachments/assets/32c630a9-3263-466a-ae5f-604885ae0e41">
+
+<img width="1278" alt="image" src="https://github.com/user-attachments/assets/d11acdd2-d595-48dd-a8a0-e94db70e473a">
+
 Features
 
 	•	Movie Search: Allows users to search for movies by title and retrieve detailed information (overview, rating, release date, cast, etc.).
