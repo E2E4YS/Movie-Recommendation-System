@@ -35,6 +35,21 @@ Steps to Deploy the App:
 	6.	Pushing Code to GitHub: Push the complete code to GitHub for version control.
 	7.	Connecting to Heroku: Set up a Heroku account and link the GitHub repository.
 	8.	Deploy the App: Deploy the app on Heroku to make it accessible online.
+ 🛠 Skills
+
+	•	Python
+	•	Flask
+	•	BeautifulSoup
+	•	Machine Learning
+	•	Deep Learning
+	•	Data Science
+	•	SQL
+	•	Natural Language Processing (NLP)
+  About Me
+ Hi, I’m Yaroslav Slonskii! 👋
+ 
+I’m currently a Computer Science student with a minor in Data Engineering at Kent State University. My focus is on developing skills in data science, machine learning, and AI to solve complex problems and build innovative data-driven solutions. I’m passionate about working on projects that merge data analysis with technology, and I’m eager to leverage my knowledge to become a Data Scientist or Data Analyst.
+ 
 
  This project was made possible by:
 
