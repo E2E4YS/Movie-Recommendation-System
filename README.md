@@ -35,16 +35,26 @@ Steps to Deploy the App:
 	6.	Pushing Code to GitHub: Push the complete code to GitHub for version control.
 	7.	Connecting to Heroku: Set up a Heroku account and link the GitHub repository.
 	8.	Deploy the App: Deploy the app on Heroku to make it accessible online.
- 🛠 Skills
 
-	•	Python
-	•	Flask
-	•	BeautifulSoup
-	•	Machine Learning
-	•	Deep Learning
-	•	Data Cleaning
-	•	SQL
-	•	Data Science
+🛠 Skills
+
+	•	Python: Core language used for backend development and data processing.
+	•	Flask: Web framework used to build the API and deploy the movie recommendation system.
+	•	TMDb API: Used to fetch real-time movie details (title, genre, runtime, rating, etc.).
+	•	BeautifulSoup: Used for web scraping IMDb reviews for sentiment analysis.
+	•	Data Scraping: Extracted movie reviews and other information from IMDb using web scraping tools.
+	•	Data Cleaning: Cleaned and pre-processed data to ensure accurate and meaningful recommendations.
+	•	Natural Language Processing (NLP): Applied for performing sentiment analysis on movie reviews.
+	•	Machine Learning: Built the content-based recommendation model to suggest similar movies.
+	•	Pandas: Used for data manipulation, cleaning, and preparation.
+	•	NumPy: Utilized for numerical computing and efficient data handling.
+	•	Scikit-learn: Implemented machine learning algorithms for the recommendation system.
+	•	HTML/CSS/JavaScript: For creating the frontend interface of the project.
+	•	jQuery: Enhanced frontend interaction, API calls, and dynamic search functionality.
+	•	Bootstrap: For responsive and mobile-friendly web design.
+	•	SQL: Managed and queried large datasets for recommendations.
+	•	Git: Version control for managing project progress and collaboration.
+ 
   About Me
  Hi, I’m Yaroslav Slonskii! 👋
  
