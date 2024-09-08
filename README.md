@@ -42,9 +42,9 @@ Steps to Deploy the App:
 	•	BeautifulSoup
 	•	Machine Learning
 	•	Deep Learning
-	•	Data Science
+	•	Data Cleaning
 	•	SQL
-	•	Natural Language Processing (NLP)
+	•	Data Science
   About Me
  Hi, I’m Yaroslav Slonskii! 👋
  
