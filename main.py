@@ -77,28 +77,32 @@ def similarity():
         m_str="---".join(rc)
         return m_str
 
-@app.route("/recommend",methods=["POST"])
+@app.route("/recommend", methods=["POST"])
 def recommend():
+    # Check if 'title' is in request.form to avoid KeyError
+    if 'title' not in request.form:
+        return "Error: Missing data in form submission.", 400
+    
     # getting data from AJAX request
-    title = request.form['title']
-    cast_ids = request.form['cast_ids']
-    cast_names = request.form['cast_names']
-    cast_chars = request.form['cast_chars']
-    cast_bdays = request.form['cast_bdays']
-    cast_bios = request.form['cast_bios']
-    cast_places = request.form['cast_places']
-    cast_profiles = request.form['cast_profiles']
-    imdb_id = request.form['imdb_id']
-    poster = request.form['poster']
-    genres = request.form['genres']
-    overview = request.form['overview']
-    vote_average = request.form['rating']
-    vote_count = request.form['vote_count']
-    release_date = request.form['release_date']
-    runtime = request.form['runtime']
-    status = request.form['status']
-    rec_movies = request.form['rec_movies']
-    rec_posters = request.form['rec_posters']
+    title = request.form.get('title')
+    cast_ids = request.form.get('cast_ids')
+    cast_names = request.form.get('cast_names')
+    cast_chars = request.form.get('cast_chars')
+    cast_bdays = request.form.get('cast_bdays')
+    cast_bios = request.form.get('cast_bios')
+    cast_places = request.form.get('cast_places')
+    cast_profiles = request.form.get('cast_profiles')
+    imdb_id = request.form.get('imdb_id')
+    poster = request.form.get('poster')
+    genres = request.form.get('genres')
+    overview = request.form.get('overview')
+    vote_average = request.form.get('rating')
+    vote_count = request.form.get('vote_count')
+    release_date = request.form.get('release_date')
+    runtime = request.form.get('runtime')
+    status = request.form.get('status')
+    rec_movies = request.form.get('rec_movies')
+    rec_posters = request.form.get('rec_posters')
 
     # get movie suggestions for auto complete
     suggestions = get_suggestions()
@@ -113,7 +117,7 @@ def recommend():
     cast_bios = convert_to_list(cast_bios)
     cast_places = convert_to_list(cast_places)
     
-    # convert string to list (eg. "[1,2,3]" to [1,2,3])
+    # convert string to list (e.g., "[1,2,3]" to [1,2,3])
     cast_ids = cast_ids.split(',')
     cast_ids[0] = cast_ids[0].replace("[","")
     cast_ids[-1] = cast_ids[-1].replace("]","")
@@ -122,20 +126,21 @@ def recommend():
     for i in range(len(cast_bios)):
         cast_bios[i] = cast_bios[i].replace(r'\n', '\n').replace(r'\"','\"')
     
-    # combining multiple lists as a dictionary which can be passed to the html file so that it can be processed easily and the order of information will be preserved
+    # combining multiple lists as a dictionary
     movie_cards = {rec_posters[i]: rec_movies[i] for i in range(len(rec_posters))}
+    casts = {cast_names[i]: [cast_ids[i], cast_chars[i], cast_profiles[i]] for i in range(len(cast_profiles))}
+    cast_details = {cast_names[i]: [cast_ids[i], cast_profiles[i], cast_bdays[i], cast_places[i], cast_bios[i]] for i in range(len(cast_places))}
 
-    casts = {cast_names[i]:[cast_ids[i], cast_chars[i], cast_profiles[i]] for i in range(len(cast_profiles))}
+    # web scraping to get user reviews from IMDb site
+    imdb_url = 'https://www.imdb.com/title/{}/reviews?ref_=tt_ov_rt'.format(imdb_id)
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
+    request_object = urllib.request.Request(imdb_url, headers=headers)
+    sauce = urllib.request.urlopen(request_object).read()
+    soup = bs.BeautifulSoup(sauce, 'lxml')
+    soup_result = soup.find_all("div", {"class": "text show-more__control"})
 
-    cast_details = {cast_names[i]:[cast_ids[i], cast_profiles[i], cast_bdays[i], cast_places[i], cast_bios[i]] for i in range(len(cast_places))}
-
-    # web scraping to get user reviews from IMDB site
-    sauce = urllib.request.urlopen('https://www.imdb.com/title/{}/reviews?ref_=tt_ov_rt'.format(imdb_id)).read()
-    soup = bs.BeautifulSoup(sauce,'lxml')
-    soup_result = soup.find_all("div",{"class":"text show-more__control"})
-
-    reviews_list = [] # list of reviews
-    reviews_status = [] # list of comments (good or bad)
+    reviews_list = []  # list of reviews
+    reviews_status = []  # list of comments (good or bad)
     for reviews in soup_result:
         if reviews.string:
             reviews_list.append(reviews.string)
@@ -146,12 +151,12 @@ def recommend():
             reviews_status.append('Good' if pred else 'Bad')
 
     # combining reviews and comments into a dictionary
-    movie_reviews = {reviews_list[i]: reviews_status[i] for i in range(len(reviews_list))}     
+    movie_reviews = {reviews_list[i]: reviews_status[i] for i in range(len(reviews_list))}
 
     # passing all the data to the html file
-    return render_template('recommend.html',title=title,poster=poster,overview=overview,vote_average=vote_average,
-        vote_count=vote_count,release_date=release_date,runtime=runtime,status=status,genres=genres,
-        movie_cards=movie_cards,reviews=movie_reviews,casts=casts,cast_details=cast_details)
-
+    return render_template('recommend.html', title=title, poster=poster, overview=overview, vote_average=vote_average,
+                           vote_count=vote_count, release_date=release_date, runtime=runtime, status=status, genres=genres,
+                           movie_cards=movie_cards, reviews=movie_reviews, casts=casts, cast_details=cast_details)
+                           
 if __name__ == '__main__':
     app.run(debug=True)
